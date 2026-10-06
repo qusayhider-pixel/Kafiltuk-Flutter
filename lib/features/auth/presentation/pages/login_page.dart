@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/routing/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -13,10 +14,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AuthCubit(),
-      child: const _LoginView(),
-    );
+    return BlocProvider(create: (_) => AuthCubit(), child: const _LoginView());
   }
 }
 
@@ -101,9 +99,8 @@ class _LoginViewState extends State<_LoginView> {
                         color: AppColors.textMuted,
                         size: 20,
                       ),
-                      onPressed: () => context
-                          .read<AuthCubit>()
-                          .togglePasswordVisibility(),
+                      onPressed: () =>
+                          context.read<AuthCubit>().togglePasswordVisibility(),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -124,9 +121,9 @@ class _LoginViewState extends State<_LoginView> {
                     onPressed: state.isLoading
                         ? null
                         : () => context.read<AuthCubit>().login(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            ),
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
                   ),
                   const SizedBox(height: 24),
                   Row(
@@ -137,7 +134,7 @@ class _LoginViewState extends State<_LoginView> {
                         style: AppTextStyles.body,
                       ),
                       GestureDetector(
-                        onTap: () => context.push(AppRouter.signup),
+                        onTap: () => context.push(AppRouter.doctorHome),
                         child: Text(
                           'Sign up',
                           style: AppTextStyles.body.copyWith(

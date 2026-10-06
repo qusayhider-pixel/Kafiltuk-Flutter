@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kafiltuk/features/doctor_booking/presentation/cubit/doctor_booking_state.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -92,7 +93,9 @@ class _DoctorDetailsView extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 4),
+                                    horizontal: 10,
+                                    vertical: 4,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
@@ -148,6 +151,18 @@ class _DoctorDetailsView extends StatelessWidget {
                                     width: 110,
                                     height: 130,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 110,
+                                        height: 130,
+                                        color: AppColors.background,
+                                        child: const Icon(
+                                          Icons.person,
+                                          size: 40,
+                                          color: Colors.grey,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -179,8 +194,7 @@ class _DoctorDetailsView extends StatelessWidget {
                         StatItem(
                           icon: Icons.groups_rounded,
                           iconColor: AppColors.primary,
-                          backgroundColor:
-                              AppColors.primary.withOpacity(0.1),
+                          backgroundColor: AppColors.primary.withOpacity(0.1),
                           value: doctor.formattedPatients,
                           label: 'Patients',
                         ),
@@ -205,7 +219,10 @@ class _DoctorDetailsView extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(doctor.about, style: AppTextStyles.body),
                     const SizedBox(height: 24),
-                    const Text('Select appointment date', style: AppTextStyles.h3),
+                    const Text(
+                      'Select appointment date',
+                      style: AppTextStyles.h3,
+                    ),
                     const SizedBox(height: 12),
                     BlocBuilder<DoctorBookingCubit, DoctorBookingState>(
                       builder: (context, state) {
@@ -218,7 +235,8 @@ class _DoctorDetailsView extends StatelessWidget {
                                 const SizedBox(width: 10),
                             itemBuilder: (context, index) {
                               final date = state.availableDates[index];
-                              final isToday = date.day == today.day &&
+                              final isToday =
+                                  date.day == today.day &&
                                   date.month == today.month &&
                                   date.year == today.year;
                               return DateChip(
@@ -245,11 +263,11 @@ class _DoctorDetailsView extends StatelessWidget {
                           itemCount: state.availableTimes.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 2.4,
-                          ),
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 2.4,
+                              ),
                           itemBuilder: (context, index) {
                             return TimeSlotChip(
                               time: state.availableTimes[index],

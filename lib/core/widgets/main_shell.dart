@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../theme/app_colors.dart';
 
 class MainShell extends StatelessWidget {
@@ -16,65 +17,103 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // 1. تفعيل امتداد الواجهة خلف الـ Navigation Bar ليعطي تأثير الطفو
+      extendBody: true,
       body: navigationShell,
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
-          ],
-        ),
-        child: SafeArea(
-          top: false,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(_items.length, (index) {
-              final isSelected = navigationShell.currentIndex == index;
-              final item = _items[index];
-              return GestureDetector(
-                onTap: () => navigationShell.goBranch(
-                  index,
-                  initialLocation: index == navigationShell.currentIndex,
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          // 2. الهوامش الخارجية لرفع الشريط عن الحواف
+          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(28),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          // 3. إضافة تأثير الزجاج المغبش (Blur)
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(28),
+            child:  Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 12,
                 ),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.primary.withOpacity(0.1)
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        item.icon,
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.textMuted,
+                decoration: BoxDecoration(
+                  // لون شبه شفاف ليظهر التغبيش بوضوح
+                  color: AppColors.surface.withOpacity(0.85),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(_items.length, (index) {
+                    final isSelected = navigationShell.currentIndex == index;
+                    final item = _items[index];
+                    return GestureDetector(
+                      onTap: () => navigationShell.goBranch(
+                        index,
+                        initialLocation: index == navigationShell.currentIndex,
                       ),
-                      if (isSelected) ...[
-                        const SizedBox(height: 4),
-                        Text(
-                          item.label,
-                          style: const TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      behavior: HitTestBehavior.opaque,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 350),
+                        curve: Curves.easeOutCubic,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
                         ),
-                      ],
-                    ],
-                  ),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? AppColors.primary.withOpacity(0.12)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        // 4. تحويل العمود إلى صف (Row) ليظهر النص بجانب الأيقونة
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              item.icon,
+                              color: isSelected
+                                  ? AppColors.primary
+                                  : AppColors.textMuted,
+                            ),
+                            // 5. أنيميشن ناعم لظهور النص واختفائه
+                            AnimatedSize(
+                              duration: const Duration(milliseconds: 350),
+                              curve: Curves.easeOutCubic,
+                              child: SizedBox(
+                                width: isSelected ? null : 0,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      item.label,
+                                      style: const TextStyle(
+                                        color: AppColors.primary,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
                 ),
-              );
-            }),
+              ),
+            ),
           ),
         ),
-      ),
+      
     );
   }
 }

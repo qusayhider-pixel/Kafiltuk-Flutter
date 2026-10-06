@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -29,12 +30,14 @@ class PrimaryButton extends StatelessWidget {
           backgroundColor: backgroundColor ?? AppColors.primary,
           disabledBackgroundColor: AppColors.primary.withOpacity(0.4),
           elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               label,

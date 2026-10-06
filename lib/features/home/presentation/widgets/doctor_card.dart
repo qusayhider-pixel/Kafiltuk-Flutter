@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kafiltuk/core/routing/app_router.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/rating_badge.dart';
@@ -22,7 +23,7 @@ class _DoctorCardState extends State<DoctorCard> {
   Widget build(BuildContext context) {
     final doctor = widget.doctor;
     return GestureDetector(
-           onTap: () {
+      onTap: () {
         context.push(AppRouter.details, extra: doctor);
       },
       child: Container(
@@ -51,6 +52,18 @@ class _DoctorCardState extends State<DoctorCard> {
                   width: 72,
                   height: 72,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 72,
+                      height: 72,
+                      color: AppColors.background,
+                      child: const Icon(
+                        Icons.person,
+                        size: 40,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -65,12 +78,9 @@ class _DoctorCardState extends State<DoctorCard> {
                         child: Text(doctor.name, style: AppTextStyles.h3),
                       ),
                       GestureDetector(
-                        onTap: () =>
-                            setState(() => isFavorite = !isFavorite),
+                        onTap: () => setState(() => isFavorite = !isFavorite),
                         child: Icon(
-                          isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
                           size: 20,
                           color: isFavorite
                               ? Colors.redAccent
