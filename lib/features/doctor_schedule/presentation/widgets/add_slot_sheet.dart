@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -24,9 +25,8 @@ class _AddSlotSheetState extends State<AddSlotSheet> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: AppColors.primary,
-                ),
+            colorScheme: Theme.of(context).colorScheme
+                .copyWith(primary: AppColors.primary),
           ),
           child: child!,
         );
@@ -46,7 +46,9 @@ class _AddSlotSheetState extends State<AddSlotSheet> {
 
   void _submit() {
     if (_startTime == null || _endTime == null) {
-      setState(() => _validationError = 'Please select both start and end time');
+      setState(
+        () => _validationError = 'Please select both start and end time',
+      );
       return;
     }
 
@@ -120,10 +122,13 @@ class _AddSlotSheetState extends State<AddSlotSheet> {
             ),
           ],
           const SizedBox(height: 24),
-          PrimaryButton(
-            label: 'Add Slot',
-            trailingIcon: Icons.add_rounded,
-            onPressed: _submit,
+          SizedBox(
+            width: double.infinity,
+            child: PrimaryButton(
+              label: 'Add Slot',
+              trailingIcon: Icons.add_rounded,
+              onPressed: _submit,
+            ),
           ),
         ],
       ),
@@ -136,7 +141,11 @@ class _TimeField extends StatelessWidget {
   final String? value;
   final VoidCallback onTap;
 
-  const _TimeField({required this.label, required this.value, required this.onTap});
+  const _TimeField({
+    required this.label,
+    required this.value,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +164,11 @@ class _TimeField extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.access_time_rounded,
-                    size: 18, color: AppColors.textMuted),
+                Icon(
+                  Icons.access_time_rounded,
+                  size: 18,
+                  color: AppColors.textMuted,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   value ?? 'Select',
@@ -164,8 +176,9 @@ class _TimeField extends StatelessWidget {
                     color: value == null
                         ? AppColors.textMuted
                         : AppColors.textPrimary,
-                    fontWeight:
-                        value == null ? FontWeight.normal : FontWeight.w600,
+                    fontWeight: value == null
+                        ? FontWeight.normal
+                        : FontWeight.w600,
                   ),
                 ),
               ],

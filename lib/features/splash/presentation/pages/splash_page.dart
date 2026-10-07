@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kafiltuk/core/routing/app_router.dart';
 import 'package:kafiltuk/core/theme/app_colors.dart';
+import 'package:kafiltuk/core/theme/app_text_styles.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -26,13 +27,17 @@ class _SplashPageState extends State<SplashPage>
 
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween(begin: 0.7, end: 1.05)
-            .chain(CurveTween(curve: Curves.easeOutBack)),
+        tween: Tween(
+          begin: 0.7,
+          end: 1.05,
+        ).chain(CurveTween(curve: Curves.easeOutBack)),
         weight: 40,
       ),
       TweenSequenceItem(
-        tween: Tween(begin: 1.05, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween(
+          begin: 1.05,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 20,
       ),
     ]).animate(_controller);
@@ -44,7 +49,7 @@ class _SplashPageState extends State<SplashPage>
 
     _controller.forward();
 
-       Future.delayed(const Duration(milliseconds: 2400), () {
+    Future.delayed(const Duration(milliseconds: 2400), () {
       if (mounted) {
         context.go(AppRouter.home);
       }
@@ -100,13 +105,13 @@ class _SplashPageState extends State<SplashPage>
                               width: 62,
                               height: 62,
                               decoration: BoxDecoration(
-                                color: AppColors.primary,
+                                color: AppColors.primary.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Icon(
-                                Icons.medical_services_rounded,
-                                color: Colors.white,
-                                size: 32,
+                              child: Image.asset(
+                                'assets/images/appIcon.png',
+                                width: 40,
+                                height: 40,
                               ),
                             ),
                           ),
@@ -129,21 +134,17 @@ class _SplashPageState extends State<SplashPage>
                   const SizedBox(height: 28),
                   Opacity(
                     opacity: _controller.value.clamp(0.0, 1.0),
-                    child: const Text(
-                      'MediCare',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Text(
+                      'كَفِلتُك',
+                      style: AppTextStyles.h1.copyWith(color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 6),
                   Opacity(
                     opacity: _controller.value.clamp(0.0, 1.0),
-                    child: const Text(
+                    child: Text(
                       'Your health, one appointment away',
-                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                      style: AppTextStyles.h2.copyWith(color: Colors.white70),
                     ),
                   ),
                   const Spacer(flex: 4),
@@ -155,15 +156,14 @@ class _SplashPageState extends State<SplashPage>
                       child: LinearProgressIndicator(
                         value: _progressAnimation.value,
                         backgroundColor: Colors.white24,
-                        valueColor:
-                            const AlwaysStoppedAnimation(Colors.white),
+                        valueColor: const AlwaysStoppedAnimation(Colors.white),
                       ),
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
+                  Text(
                     'Preparing your healthcare experience',
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
+                    style: AppTextStyles.body.copyWith(color: Colors.white70),
                   ),
                   const SizedBox(height: 40),
                 ],

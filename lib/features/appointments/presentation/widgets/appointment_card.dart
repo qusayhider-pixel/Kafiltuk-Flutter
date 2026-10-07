@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../data/models/appointment_model.dart';
@@ -61,6 +62,12 @@ class AppointmentCard extends StatelessWidget {
                   width: 64,
                   height: 64,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: 64,
+                    height: 64,
+                    color: AppColors.primaryDark.withOpacity(0.6),
+                    child: const Icon(Icons.person, color: Colors.white),
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -76,7 +83,9 @@ class AppointmentCard extends StatelessWidget {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: _statusColor.withOpacity(0.12),
                             borderRadius: BorderRadius.circular(20),
@@ -110,16 +119,22 @@ class AppointmentCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.calendar_today_rounded,
-                  size: 14, color: AppColors.textSecondary),
+              const Icon(
+                Icons.calendar_today_rounded,
+                size: 14,
+                color: AppColors.textSecondary,
+              ),
               const SizedBox(width: 6),
               Text(
                 DateFormat('EEE, d MMM yyyy').format(appointment.dateTime),
                 style: AppTextStyles.caption,
               ),
               const SizedBox(width: 16),
-              const Icon(Icons.access_time_rounded,
-                  size: 14, color: AppColors.textSecondary),
+              const Icon(
+                Icons.access_time_rounded,
+                size: 14,
+                color: AppColors.textSecondary,
+              ),
               const SizedBox(width: 6),
               Text(
                 DateFormat('h:mm a').format(appointment.dateTime),

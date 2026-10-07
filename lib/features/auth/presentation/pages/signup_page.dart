@@ -132,19 +132,22 @@ class _SignupViewState extends State<_SignupView> {
                     ),
                   ),
                   const SizedBox(height: 28),
-                  PrimaryButton(
-                    label:
-                        state.isLoading ? 'Creating account...' : 'Sign up',
-                    trailingIcon: state.isLoading ? null : Icons.arrow_forward,
-                    onPressed: state.isLoading
-                        ? null
-                        : () => context.read<AuthCubit>().signUp(
-                              name: _nameController.text,
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              confirmPassword:
-                                  _confirmPasswordController.text,
-                            ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: PrimaryButton(
+                      label:
+                          state.isLoading ? 'Creating account...' : 'Sign up',
+                      trailingIcon: state.isLoading ? null : Icons.arrow_forward,
+                      onPressed: state.isLoading
+                          ? null
+                          : () => context.read<AuthCubit>().signUp(
+                                name: _nameController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                confirmPassword:
+                                    _confirmPasswordController.text,
+                              ),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   Row(

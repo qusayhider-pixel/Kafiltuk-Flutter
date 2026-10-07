@@ -58,13 +58,13 @@ class _LoginViewState extends State<_LoginView> {
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: AppColors.primary,
+                      color: AppColors.primary.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    child: const Icon(
-                      Icons.medical_services_rounded,
-                      color: Colors.white,
-                      size: 30,
+                    child: Image.asset(
+                      'assets/images/appIcon.png',
+                      width: 32,
+                      height: 32,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -72,7 +72,7 @@ class _LoginViewState extends State<_LoginView> {
                   const SizedBox(height: 6),
                   const Text(
                     'Log in to continue booking appointments',
-                    style: AppTextStyles.body,
+                    style: AppTextStyles.h2,
                   ),
                   const SizedBox(height: 32),
                   AuthTextField(
@@ -106,24 +106,34 @@ class _LoginViewState extends State<_LoginView> {
                   const SizedBox(height: 10),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      'Forgot password?',
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
+                    child: GestureDetector(
+                      onTap: () =>
+                          context.pushReplacement(AppRouter.doctorHome),
+
+                      child: Text(
+                        'Forgot password?',
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 28),
-                  PrimaryButton(
-                    label: state.isLoading ? 'Logging in...' : 'Log in',
-                    trailingIcon: state.isLoading ? null : Icons.arrow_forward,
-                    onPressed: state.isLoading
-                        ? null
-                        : () => context.read<AuthCubit>().login(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: PrimaryButton(
+                      label: state.isLoading ? 'Logging in...' : 'Log in',
+                      trailingIcon: state.isLoading
+                          ? null
+                          : Icons.arrow_forward,
+                      onPressed: state.isLoading
+                          ? null
+                          : () => context.read<AuthCubit>().login(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            ),
+                    ),
                   ),
                   const SizedBox(height: 24),
                   Row(
@@ -134,7 +144,7 @@ class _LoginViewState extends State<_LoginView> {
                         style: AppTextStyles.body,
                       ),
                       GestureDetector(
-                        onTap: () => context.push(AppRouter.doctorHome),
+                        onTap: () => context.push(AppRouter.signup),
                         child: Text(
                           'Sign up',
                           style: AppTextStyles.body.copyWith(

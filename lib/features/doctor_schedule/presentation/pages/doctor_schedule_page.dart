@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../cubit/schedule_cubit.dart';
@@ -27,13 +28,13 @@ class _DoctorScheduleView extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useRootNavigator: true,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
-      builder: (_) => AddSlotSheet(
-        onAdd: (start, end) => cubit.addTimeSlot(start, end),
-      ),
+      builder: (_) =>
+          AddSlotSheet(onAdd: (start, end) => cubit.addTimeSlot(start, end)),
     );
   }
 
@@ -81,14 +82,16 @@ class _DoctorScheduleView extends StatelessWidget {
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemCount: state.weekDays.length,
-                          separatorBuilder: (_, __) => const SizedBox(width: 10),
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(width: 10),
                           itemBuilder: (context, index) {
                             return DayToggleChip(
                               label: state.weekDays[index],
                               isSelected: state.selectedDayIndex == index,
                               isActive: state.activeDays.contains(index),
-                              onTap: () =>
-                                  context.read<ScheduleCubit>().selectDay(index),
+                              onTap: () => context
+                                  .read<ScheduleCubit>()
+                                  .selectDay(index),
                             );
                           },
                         ),
@@ -99,7 +102,9 @@ class _DoctorScheduleView extends StatelessWidget {
                           Expanded(
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 12),
+                                horizontal: 14,
+                                vertical: 12,
+                              ),
                               decoration: BoxDecoration(
                                 color: state.isSelectedDayActive
                                     ? AppColors.success.withOpacity(0.1)
@@ -133,7 +138,9 @@ class _DoctorScheduleView extends StatelessWidget {
                                     activeColor: AppColors.success,
                                     onChanged: (_) => context
                                         .read<ScheduleCubit>()
-                                        .toggleDayActive(state.selectedDayIndex),
+                                        .toggleDayActive(
+                                          state.selectedDayIndex,
+                                        ),
                                   ),
                                 ],
                               ),
@@ -150,7 +157,9 @@ class _DoctorScheduleView extends StatelessWidget {
                             onTap: () => _openAddSlotSheet(context),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppColors.primary,
                                 borderRadius: BorderRadius.circular(10),
@@ -158,8 +167,11 @@ class _DoctorScheduleView extends StatelessWidget {
                               child: const Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.add_rounded,
-                                      size: 16, color: Colors.white),
+                                  Icon(
+                                    Icons.add_rounded,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
                                   SizedBox(width: 4),
                                   Text(
                                     'Add Slot',

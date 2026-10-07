@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -115,13 +116,17 @@ class BookingSuccessSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          PrimaryButton(
-            label: 'Done',
-            trailingIcon: null,
-            onPressed: () => Navigator.of(context)
-              ..pop()
-              ..pop(),
+          SizedBox(
+            width: double.infinity,
+            child: PrimaryButton(
+              label: 'Done',
+              trailingIcon: null,
+              onPressed: () => Navigator.of(context)
+                ..pop()
+                ..pop(),
+            ),
           ),
+          const SizedBox(height: 12),
         ],
       ),
     );

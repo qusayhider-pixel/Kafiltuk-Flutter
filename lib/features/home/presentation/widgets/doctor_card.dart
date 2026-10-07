@@ -50,12 +50,12 @@ class _DoctorCardState extends State<DoctorCard> {
                 child: Image.network(
                   doctor.imageUrl,
                   width: 72,
-                  height: 72,
+                  height: 90,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       width: 72,
-                      height: 72,
+                      height: 80,
                       color: AppColors.background,
                       child: const Icon(
                         Icons.person,

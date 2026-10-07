@@ -17,7 +17,6 @@ class DoctorMainShell extends StatelessWidget {
     _DoctorNavItem(icon: Icons.person_outline_rounded, label: 'Profile'),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +24,15 @@ class DoctorMainShell extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: SafeArea(
         child: Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
           decoration: BoxDecoration(
+            color: AppColors.surface.withOpacity(0.6),
             borderRadius: BorderRadius.circular(28),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08), // ظل ناعم جداً
-                blurRadius: 20,
-                offset: const Offset(0, 10),
+                color: AppColors.primary.withOpacity(0.15), // ظل ناعم جداً
+                blurRadius: 30,
+                spreadRadius: 5,
               ),
             ],
           ),
@@ -64,13 +64,9 @@ class DoctorMainShell extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.primary.withOpacity(
-                                0.12,
-                              )
+                            ? AppColors.primary.withOpacity(0.12)
                             : Colors.transparent,
-                        borderRadius: BorderRadius.circular(
-                          20,
-                        ), 
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
